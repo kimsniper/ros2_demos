@@ -1,0 +1,46 @@
+cmake_minimum_required(VERSION 3.8)
+project(my_robot_actions)
+
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
+
+# find dependencies
+find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(rclcpp_action REQUIRED)
+find_package(my_robot_interfaces REQUIRED)
+
+add_executable(count_until_server_blocking src/count_until_server_blocking.cpp)
+ament_target_dependencies(count_until_server_blocking rclcpp rclcpp_action my_robot_interfaces)
+
+add_executable(count_until_client src/count_until_client.cpp)
+ament_target_dependencies(count_until_client rclcpp rclcpp_action my_robot_interfaces)
+
+add_executable(count_until_server_non_blocking src/count_until_server_non_blocking.cpp)
+ament_target_dependencies(count_until_server_non_blocking rclcpp rclcpp_action my_robot_interfaces)
+
+add_executable(count_until_client_cancel_test src/count_until_client_cancel_test.cpp)
+ament_target_dependencies(count_until_client_cancel_test rclcpp rclcpp_action my_robot_interfaces)
+
+add_executable(count_until_server_single_goal src/count_until_server_single_goal.cpp)
+ament_target_dependencies(count_until_server_single_goal rclcpp rclcpp_action my_robot_interfaces)
+
+add_executable(count_until_server_preempt_current_goal src/count_until_server_preempt_current_goal.cpp)
+ament_target_dependencies(count_until_server_preempt_current_goal rclcpp rclcpp_action my_robot_interfaces)
+
+add_executable(count_until_server_queue_goals src/count_until_server_queue_goals.cpp)
+ament_target_dependencies(count_until_server_queue_goals rclcpp rclcpp_action my_robot_interfaces)
+
+install(TARGETS
+  count_until_server_blocking
+  count_until_client
+  count_until_server_non_blocking
+  count_until_client_cancel_test
+  count_until_server_single_goal
+  count_until_server_preempt_current_goal
+  count_until_server_queue_goals
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+ament_package()
